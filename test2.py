@@ -3,6 +3,7 @@ import xlrd
 from xlwt import *
 from openpyxl import Workbook as wb
 #------------------读数据---------------------------------
+filename_list = ['BabyDiapers','Beer','breakfast cereal','Butter','Cabonates','Cereals','Cigarettes','Coffe','Deodorants','Facial_Tissues','FrozenFood','General Purpose Cleaner','Ketchup','Laundry_Detergents','Mayonnaise','Milk','PaperTowel','PeanutButter','Pizzas','Sauces','Shampoo','Snaks','Soups','Toilet_Tissues','Toothbrush','Toothpaste','Yogurt'] 
 fileName1='G:\\数据\\code\\PLA_Beer_UPC_20010101-20071230.xls' #UPC码文档
 bk=xlrd.open_workbook(fileName1)
 shxrange=range(bk.nsheets)
@@ -29,7 +30,6 @@ for upc_item in tmp:
 
 
 
-type_total = 0;
 for test_upc in UPC:
 	# print('------------------------------------------------------')
 	table_head = ['IRI_KEY','WEEK','SY','GE','VEND','ITEM','UNITS','DOLLARS','F','D','PR']
@@ -39,7 +39,7 @@ for test_upc in UPC:
 	for i in range(headlen):
 		xlsheet.cell(row=1,column=i+1).value = table_head[i] #写表头
 
-	fileName2 = open('G:\\数据\\code\\beer_drug_1114_1165')  #销售记录文档
+	fileName2 = open('G:\\数据\\code\\beer_groc_1114_1165')  #销售记录文档
 	for line in fileName2:
 		line=line.strip('\n')
 		line=line.split()
