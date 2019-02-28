@@ -42,8 +42,7 @@ tmp3.remove('soup')
 table_head = ['IRI_KEY','WEEK','SY','GE','VEND','ITEM','UNITS','DOLLARS','F','D','PR']
 
 for j in range(0,1):
-	for i in range(0,len(tmp1)):
-	#for i in range(1,2):
+	for i in range(3,len(tmp1)):
 		print(tmp1[i])
 		fileName1='G:\\数据\\PLA-UPC文档\\PLA_'+tmp1[i]+'_UPC.xls' #UPC码文档
 		bk=xlrd.open_workbook(fileName1)
@@ -54,12 +53,11 @@ for j in range(0,1):
 		except:
 			print ("代码出错")
 
-		ncols=sh.ncols #获取列数
-		nrows=sh.nrows #获取列数
 
 		book = Workbook(encoding='utf-8')
 		# sheet = book.add_sheet('Sheet1') #创建一个sheet
 		UPC = []
+		count = 0
 		#print(sh.col_values(18)[5])
 		if sh.col_values(17)[4] == 'UPC Code':
 			tmp = sh.col_values(17)[5:]
@@ -69,18 +67,24 @@ for j in range(0,1):
 		# 得到一个excel中所有的UPC
 		for upc_item in tmp:
 			if isinstance(upc_item, float):  #若只有一个浮点数
-				upc_item = re.sub('[^0-9]','',str(upc_item))
+				upc_item = re.sub('[^0-9]','',str(int(upc_item)))
 				UPC.append(int(upc_item))
 			else:  #若是一个列表
 				upc_item = upc_item.split(';')
+				first_item = upc_item[0]
+				high_pos = first_item[0:5]
 				for item in upc_item:
 					item = re.sub('[^0-9]','',item)
 					if item != '':
-						UPC.append(str(int(item)).zfill(5))
-					
+						if len(item) == 5:
+							UPC.append(str(int(high_pos)*100000+int(item)).zfill(5))
+						else:
+							UPC.append(str(int(item)).zfill(5))
+		upc_length = len(UPC)		
 #---------------------------开始匹配药店----------------------------
 		for test_upc in UPC:
-			print('----------------------------------------')
+			count += 1
+			print('------------'+str(count/upc_length*100)+'%'+'------------')
 			#print(test_upc)
 			book_drug = wb()
 			xlsheet = book_drug.get_sheet_by_name('Sheet')
