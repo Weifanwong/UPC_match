@@ -96,7 +96,7 @@ for j in range(0,7):
 					for k in range(headlen):
 						xlsheet.cell(row=1,column=k+1).value = table_head[k] #写表头
 					
-					fileName3 = open('G:\\数据\\Academic Dataset External copy\\'+year_list[j]+'\\External\\'+tmp2_add[i]+'\\'+tmp2_add[i]+'_drug_'+year_file_list[i])  #销售记录文档
+					fileName3 = open('G:\\数据\\Academic Dataset External copy\\'+year_list[j]+'\\External\\'+tmp2_add[i]+'\\'+tmp2_add[i]+'_drug_'+year_file_list[j])  #销售记录文档
 					for line in fileName3:
 						line=line.strip('\n')
 						line=line.split()

@@ -96,7 +96,7 @@ for j in range(0,7):
 					for k in range(headlen):
 						xlsheet.cell(row=1,column=k+1).value = table_head[k] #写表头
 					
-					fileName3 = open('G:\\数据\\Academic Dataset External copy\\'+year_list[j]+'\\External\\'+tmp2_add[i]+'\\'+tmp2_add[i]+'_groc_'+year_file_list[i])  #销售记录文档
+					fileName3 = open('G:\\数据\\Academic Dataset External copy\\'+year_list[j]+'\\External\\'+tmp2_add[i]+'\\'+tmp2_add[i]+'_groc_'+year_file_list[j])  #销售记录文档
 					for line in fileName3:
 						line=line.strip('\n')
 						line=line.split()
@@ -109,10 +109,10 @@ for j in range(0,7):
 							print(line)
 							xlsheet.append(line)
 					if (xlsheet.cell(row=2,column=1).value != None):
-						isExists = os.path.exists('G:\\数据\\result1\\'+year_list[j]+'\\'+tmp2_add[i]+'\\groc')
+						isExists = os.path.exists('G:\\数据\\result\\'+year_list[j]+'\\'+tmp2_add[i]+'\\groc')
 						if not isExists:
-							os.makedirs('G:\\数据\\result1\\'+year_list[j]+'\\'+tmp2_add[i]+'\\groc')
-							book_groc.save('G:\\数据\\result1\\'+year_list[j]+'\\'+tmp2_add[i]+'\\groc\\'+year_list[j]+'-'+tmp2_add[i]+'groc'+'-'+str(test_upc)+'.xlsx')
+							os.makedirs('G:\\数据\\result\\'+year_list[j]+'\\'+tmp2_add[i]+'\\groc')
+							book_groc.save('G:\\数据\\result\\'+year_list[j]+'\\'+tmp2_add[i]+'\\groc\\'+year_list[j]+'-'+tmp2_add[i]+'groc'+'-'+str(test_upc)+'.xlsx')
 						else:
-							book_groc.save('G:\\数据\\result1\\'+year_list[j]+'\\'+tmp2_add[i]+'\\groc\\'+year_list[j]+'-'+tmp2_add[i]+'groc'+'-'+str(test_upc)+'.xlsx')
+							book_groc.save('G:\\数据\\result\\'+year_list[j]+'\\'+tmp2_add[i]+'\\groc\\'+year_list[j]+'-'+tmp2_add[i]+'groc'+'-'+str(test_upc)+'.xlsx')
 		fileName3.close();
