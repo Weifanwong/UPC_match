@@ -7,7 +7,8 @@ import re
 
 
 year_list = ['Year1','Year2','Year3','Year4','Year5','Year6','Year7']
-fileName0 = 'G:\\数据\\match_table2.xls'
+year_file_list = ['1114_1165','1166_1217','1218_1269','1270_1321','1322_1373','1374_1426','1427_1478']
+fileName0 = 'G:\\数据\\match_table3.xls'
 bk=xlrd.open_workbook(fileName0)
 shxrange=range(bk.nsheets)
 try:
@@ -20,39 +21,24 @@ nrows=sh.nrows #获取列数
 book = Workbook(encoding='utf-8')
 # sheet = book.add_sheet('Sheet1') #创建一个sheet
 UPC = []
-tmp1 = sh.col_values(0)[1:]  #PLA
-tmp2 = sh.col_values(1)[1:]  #IRI
-tmp3 = sh.col_values(2)[1:]  #IRI
 
-tmp_add = ['General Purpose Cleaner','Mayonnaise','PeanutButter','Soups','breakfast cereal']
-tmp1.remove('General Purpose Cleaner')
-tmp1.remove('Mayonnaise')
-tmp1.remove('PeanutButter')
-tmp1.remove('Soups')
-tmp1.remove('breakfast cereal')
+tmp_add = ['General Purpose Cleaner','Mayonnaise','PeanutButter','Soups']
+tmp1_add = ['General Purpose Cleaner','Mayonnaise','PeanutButter','Soups']
+tmp2_add = ['hhclean','mayo','peanbutr','soup']
+tmp3_add = ['General Purpose Cleaner','Mayonnaise','PeanutButter','soup']
 
-tmp2.remove('hhclean')
-tmp2.remove('mayo')
-tmp2.remove('peanbutr')
-tmp2.remove('soup')
-tmp2.remove('coldcer')
 
-tmp3.remove('General Purpose Cleaner')
-tmp3.remove('Mayonnaise')
-tmp3.remove('PeanutButter')
-tmp3.remove('soup')
-tmp3.remove('coldcer')
 
 table_head = ['IRI_KEY','WEEK','SY','GE','VEND','ITEM','UNITS','DOLLARS','F','D','PR']
 
-for j in range(5,6):
-	for i in range(4,len(tmp1)):
-		fileName1='G:\\数据\\PLA-UPC文档\\PLA_'+tmp1[i]+'_UPC.xls' #UPC码文档
+for j in range(0,7):
+	for i in range(0,len(tmp1_add)):
+		fileName1='G:\\数据\\PLA-UPC文档\\PLA_'+tmp1_add[i]+'_UPC.xls' #UPC码文档
 		bk=xlrd.open_workbook(fileName1)
 		shxrange=range(bk.nsheets)
 		try:
 			print('打开成功')
-			sh=bk.sheet_by_name("View Results1")
+			sh=bk.sheet_by_name("Sheet1")
 		except:
 			print ("代码出错")
 
@@ -62,10 +48,8 @@ for j in range(5,6):
 		UPC = []
 		count = 0
 		#print(sh.col_values(18)[5])
-		if sh.col_values(17)[4] == 'UPC Code':
-			tmp = sh.col_values(17)[5:]
-		else:
-			tmp = sh.col_values(18)[6:]
+		tmp = sh.col_values(1)[1:]
+		print(tmp)
 
 		# 得到一个excel中所有的UPC
 		for upc_item in tmp:
@@ -104,7 +88,7 @@ for j in range(5,6):
 		for test_upc in UPC:
 					count += 1
 					print('------------'+str(count/upc_length*100)+'%'+'------------')
-					print(year_list[j]+'\\'+tmp2[i]+year_list[j])
+					print(year_list[j]+'\\'+tmp2_add[i]+year_list[j])
 					#print(test_upc)
 					book_groc = wb()
 					xlsheet = book_groc.get_sheet_by_name('Sheet')
@@ -112,7 +96,7 @@ for j in range(5,6):
 					for k in range(headlen):
 						xlsheet.cell(row=1,column=k+1).value = table_head[k] #写表头
 					
-					fileName3 = open('G:\\数据\\Academic Dataset External copy\\'+year_list[j]+'\\External\\'+tmp2[i]+'\\'+tmp2[i]+'_groc_1374_1426')  #销售记录文档
+					fileName3 = open('G:\\数据\\Academic Dataset External copy\\'+year_list[j]+'\\External\\'+tmp2_add[i]+'\\'+tmp2_add[i]+'_groc_'+year_file_list[i])  #销售记录文档
 					for line in fileName3:
 						line=line.strip('\n')
 						line=line.split()
@@ -125,10 +109,10 @@ for j in range(5,6):
 							print(line)
 							xlsheet.append(line)
 					if (xlsheet.cell(row=2,column=1).value != None):
-						isExists = os.path.exists('G:\\数据\\result\\'+year_list[j]+'\\'+tmp2[i]+'\\groc')
+						isExists = os.path.exists('G:\\数据\\result1\\'+year_list[j]+'\\'+tmp2_add[i]+'\\groc')
 						if not isExists:
-							os.makedirs('G:\\数据\\result\\'+year_list[j]+'\\'+tmp2[i]+'\\groc')
-							book_groc.save('G:\\数据\\result\\'+year_list[j]+'\\'+tmp2[i]+'\\groc\\'+year_list[j]+'-'+tmp2[i]+'groc'+'-'+str(test_upc)+'.xlsx')
+							os.makedirs('G:\\数据\\result1\\'+year_list[j]+'\\'+tmp2_add[i]+'\\groc')
+							book_groc.save('G:\\数据\\result1\\'+year_list[j]+'\\'+tmp2_add[i]+'\\groc\\'+year_list[j]+'-'+tmp2_add[i]+'groc'+'-'+str(test_upc)+'.xlsx')
 						else:
-							book_groc.save('G:\\数据\\result\\'+year_list[j]+'\\'+tmp2[i]+'\\groc\\'+year_list[j]+'-'+tmp2[i]+'groc'+'-'+str(test_upc)+'.xlsx')
+							book_groc.save('G:\\数据\\result1\\'+year_list[j]+'\\'+tmp2_add[i]+'\\groc\\'+year_list[j]+'-'+tmp2_add[i]+'groc'+'-'+str(test_upc)+'.xlsx')
 		fileName3.close();

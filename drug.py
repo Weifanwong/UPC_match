@@ -55,7 +55,7 @@ tmp3.remove('coldcer')
 table_head = ['IRI_KEY','WEEK','SY','GE','VEND','ITEM','UNITS','DOLLARS','F','D','PR']
 
 for j in range(6,7):
-	for i in range(0,len(tmp1)):
+	for i in range(13,len(tmp1)):
 		print(tmp1[i])
 		fileName1='G:\\数据\\PLA-UPC文档\\PLA_'+tmp1[i]+'_UPC.xls' #UPC码文档
 		bk=xlrd.open_workbook(fileName1)
